@@ -1,3 +1,5 @@
+require 'amor/variable'
+
 module Amor
   class Expression
 
@@ -6,9 +8,13 @@ module Amor
     def initialize(factors)
       @factors = factors
     end
-    
+
     def +(value)
-      Expression.new(self.factors + value.factors)
+      if value.is_a? Expression
+        Expression.new(self.factors + value.factors)
+      elsif value.is_a? Variable
+        Expression.new(self.factors + [[1, value]])
+      end
     end
   end
 end
