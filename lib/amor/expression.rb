@@ -8,7 +8,7 @@ module Amor
     end
     
     def scalar_of(variable)
-      @scalars[variable]
+      @scalars[variable] || 0
     end
   end
 end
