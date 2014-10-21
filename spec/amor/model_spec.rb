@@ -18,6 +18,14 @@ module Amor
       it 'returns different variables for different indices' do
         expect(@model.x(1)).not_to equal(@model.x(2))
       end
+
+      it 'stores the model in the variable' do
+        expect(@model.x(1).model).to equal(@model)
+      end
+
+      it 'stores the index in the variable' do
+        expect(@model.x(1).index).to equal(1)
+      end
     end
   end
 end

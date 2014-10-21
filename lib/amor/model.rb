@@ -10,7 +10,7 @@ module Amor
 
     # Return the variable for that index if already existing or a new one
     def x(index)
-      @variables[@indices[index] ||= @indices.size] ||= Variable.new
+      @variables[@indices[index] ||= @indices.size] ||= Variable.new(self, index)
     end
 
   end
