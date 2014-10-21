@@ -10,12 +10,18 @@ module Amor
     describe '#*' do
       # Make sure it works with Integer and Float
       [5, 5.0].each do |number|
-        it "returns an Expression when called with #{number}" do
-          expect(@variable * number).to be_a(Expression)
-        end
+        context "used with a #{number.class} as scalar" do
+          it "returns an Expression when called with #{number}" do
+            expect(@variable * number).to be_a(Expression)
+          end
 
-        it "returns an Expression with scalar of #{number} for given variable when called with #{number}" do
-          expect((@variable * number).scalar_of(@variable)).to eq(number)
+          it "returns an Expression with one factor" do
+            expect((@variable * number).factors.size).to eq(1)
+          end
+
+          it "returns an Expression with one factor consisting of given variable and the value it was called with" do
+            expect((@variable * number).factors.first).to eq([number, @variable])
+          end
         end
       end
     end

@@ -1,14 +1,11 @@
 module Amor
   class Expression
 
-    @scalars
+    attr_reader :factors
 
     def initialize(variable, scalar)
-      @scalars = {variable => scalar}
+      @factors = [[scalar, variable]]
     end
     
-    def scalar_of(variable)
-      @scalars[variable] || 0
-    end
   end
 end
