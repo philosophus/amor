@@ -11,7 +11,7 @@ module Amor
     end
 
     def * (scalar)
-      Expression.new(self, scalar)
+      Expression.new([[scalar, self]])
     end
 
   end
