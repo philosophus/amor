@@ -22,5 +22,13 @@ module Amor
       end
     end
 
+    def -(value)
+      if value.is_a? Expression
+        Expression.new([[1, self]] + value.factors.map{|factor| [-factor[0], factor[1]]})
+      elsif value.is_a? Variable
+        Expression.new([[1,self], [-1, value]])
+      end
+    end
+
   end
 end

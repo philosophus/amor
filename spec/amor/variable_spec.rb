@@ -56,5 +56,36 @@ module Amor
         end
       end
     end
+
+    describe '#-' do
+      context 'when used with an expression' do
+        before(:each) do
+          @other_variable = double('Other Variable')
+          @other_expression = Expression.new([[3.0, @other_variable]])
+        end
+
+        it 'returns an Expression' do
+          expect(@variable - @other_expression).to be_a(Expression)
+        end
+
+        it 'returns an Expression with the factor of the variable set to 1 and the negative expression' do
+          expect((@variable - @other_expression).factors).to eq([[1, @variable], [-3.0, @other_variable]])
+        end
+      end
+
+      context 'when used with a variable' do
+        before(:each) do
+          @other_variable = Variable.new(@model,2)
+        end
+
+        it 'returns an Expression' do
+          expect(@variable - @other_variable).to be_a(Expression)
+        end
+
+        it 'returns an Expression with the factor of the first variable set to 1 and the second to -1' do
+          expect((@variable - @other_variable).factors).to eq([[1, @variable], [-1, @other_variable]])
+        end
+      end
+    end
   end
 end
