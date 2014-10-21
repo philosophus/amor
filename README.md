@@ -1,7 +1,4 @@
-# Amor
-
-AMoR: Amazing Modelling with Ruby
-=================================
+# AMoR: Amazing Modelling with Ruby
 
 The modelling language you will fall in love with.
 
