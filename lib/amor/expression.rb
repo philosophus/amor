@@ -18,11 +18,7 @@ module Amor
     end
 
     def -(value)
-      if value.is_a? Expression
-        self + -value
-      elsif value.is_a? Variable
-        Expression.new(self.factors + [[-1, value]])
-      end
+      self + -value
     end
 
     def -@

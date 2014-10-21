@@ -87,5 +87,15 @@ module Amor
         end
       end
     end
+
+    describe '#-@' do
+      it 'returns an Expression' do
+        expect(-@variable).to be_a(Expression)
+      end
+
+      it 'returns an Expression with the variables factor set to -1' do
+        expect((-@variable).factors).to eq([[-1, @variable]])
+      end
+    end
   end
 end
