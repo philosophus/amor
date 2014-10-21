@@ -3,7 +3,7 @@ class Fixnum
 
   define_method(:'*') do |value|
     if value.is_a? Amor::Variable
-      Amor::Expression.new([[self, value]])
+      value * self
     else
       old_multiplication.bind(self).(value)
     end
@@ -15,7 +15,7 @@ class Float
 
   define_method(:'*') do |value|
     if value.is_a? Amor::Variable
-      Amor::Expression.new([[self, value]])
+      value * self
     else
       old_multiplication.bind(self).(value)
     end
