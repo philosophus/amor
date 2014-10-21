@@ -1,5 +1,3 @@
-require 'amor/variable'
-
 module Amor
   class Model
 

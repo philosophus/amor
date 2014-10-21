@@ -1,5 +1,3 @@
-require 'amor/expression'
-
 module Amor
   class Variable
 
