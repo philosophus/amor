@@ -1,0 +1,3 @@
+class Amor::Variable
+
+end
