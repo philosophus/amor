@@ -10,8 +10,16 @@ module Amor
       @index = index
     end
 
-    def * (scalar)
+    def *(scalar)
       Expression.new([[scalar, self]])
+    end
+
+    def +(value)
+      if value.is_a? Expression
+        Expression.new([[1, self]] + value.factors)
+      elsif value.is_a? Variable
+        Expression.new([[1,self], [1, value]])
+      end
     end
 
   end
