@@ -1,6 +1,5 @@
 class Fixnum
   old_multiplication = instance_method(:'*')
-
   define_method(:'*') do |value|
     if value.is_a? Amor::Variable
       value * self
@@ -10,7 +9,6 @@ class Fixnum
   end
 
   old_addition = instance_method(:'+')
-
   define_method(:'+') do |value|
     if value.is_a? Amor::Expression
       Amor::Expression.new([[self, :constant]] + value.factors)
@@ -18,6 +16,16 @@ class Fixnum
       old_addition.bind(self).(value)
     end
   end
+
+  old_subtraction = instance_method(:'-')
+  define_method(:'-') do |value|
+    if value.is_a? Amor::Expression
+      self + -value
+    else
+      old_subtraction.bind(self).(value)
+    end
+  end
+
 end
 
 class Float
@@ -38,6 +46,15 @@ class Float
       Amor::Expression.new([[self, :constant]] + value.factors)
     else
       old_addition.bind(self).(value)
+    end
+  end
+
+  old_subtraction = instance_method(:'-')
+  define_method(:'-') do |value|
+    if value.is_a? Amor::Expression
+      self + -value
+    else
+      old_subtraction.bind(self).(value)
     end
   end
 end

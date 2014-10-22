@@ -23,7 +23,7 @@ module Amor
         context 'when used with an expression' do
           before(:each) do
             @variable = double('Variable')
-            @expression = Expression.new([[@variable, 2.0]])
+            @expression = Expression.new([[2.0, @variable]])
           end
 
           it 'returns an Expression' do
@@ -31,7 +31,24 @@ module Amor
           end
 
           it 'returns an Expression with the first factor set to the constant' do
-            expect((number + @expression).factors).to eq([[number, :constant], [@variable, 2.0]])
+            expect((number + @expression).factors).to eq([[number, :constant], [2.0, @variable]])
+          end
+        end
+      end
+
+      describe '#-' do
+        context 'when used with an expression' do
+          before(:each) do
+            @variable = double('Variable')
+            @expression = Expression.new([[2.0, @variable]])
+          end
+
+          it 'returns an Expression' do
+            expect(number - @expression).to be_a(Expression)
+          end
+
+          it 'returns an Expression with the first factor set to the constant and the second to the negative Expression' do
+            expect((number - @expression).factors).to eq([[number, :constant], [-2.0, @variable]])
           end
         end
       end
