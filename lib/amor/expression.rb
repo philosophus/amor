@@ -16,13 +16,7 @@ module Amor
     end
 
     def +(value)
-      if value.is_a? Expression
-        Expression.new(self.factors + value.factors)
-      elsif value.is_a? Variable
-        Expression.new(self.factors + [[1, value]])
-      elsif value.is_a? Numeric
-        Expression.new(self.factors + [[value, :constant]])
-      end
+      Expression.new(self.factors + Expression.new(value).factors)
     end
 
     def -(value)
