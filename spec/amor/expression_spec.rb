@@ -217,5 +217,27 @@ module Amor
       end
     end
 
+    describe '#simplified' do
+      it 'returns an Expression' do
+        expect(Expression.new(1).simplified).to be_a(Expression)
+      end
+
+      it 'returns the Expression with no dupplications in the factors' do
+        v1 = double('Variable')
+        v2 = double('Variable')
+        v3 = double('Variable')
+        factors = Expression.new([[3, v1], [-2.0, v2], [-1, v1], [2, :constant], [2.5, v3], [1, v2], [-2.0, :constant], [3, :constant], [-2.5, v3]]).simplified.factors
+        expect(factors).to include([2, v1])
+        expect(factors).to include([-1.0, v2])
+        expect(factors).to include([3.0, :constant])
+      end
+
+      it 'returns an Expression where no factors with scalar 0 appear' do
+        v1 = double('Variable')
+        v2 = double('Variable')
+        v3 = double('Variable')
+        expect(Expression.new([[3, v1], [-2.0, v2], [-1, v1], [2, :constant], [2.5, v3], [1, v2], [-2.0, :constant], [3, :constant], [-2.5, v3]]).simplified.factors.flatten).not_to include(v3)
+      end
+    end
   end
 end

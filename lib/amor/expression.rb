@@ -47,5 +47,13 @@ module Amor
       Constraint.new(self, :greater_equal, value)
     end
 
+    def simplified
+      summed_scalars = Hash.new
+      @factors.each do |factor|
+        summed_scalars[factor[1]] = (summed_scalars[factor[1]] || 0) + factor[0]
+      end
+      Expression.new(summed_scalars.map{|var, scalar| [scalar, var]}.select{|factor| !factor[0].zero? })
+    end
+
   end
 end
