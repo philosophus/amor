@@ -15,8 +15,14 @@ module Amor
       @variables[@indices[index] ||= @indices.size] ||= Variable.new(self, index)
     end
 
+    # Add a minimization objective
     def min(expression)
       @objective = Objective.new(:minimize, expression)
+    end
+
+    # Add a maximization objective
+    def max(expression)
+      @objective = Objective.new(:maximize, expression)
     end
 
     # Create a model from a given string

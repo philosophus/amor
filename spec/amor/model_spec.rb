@@ -51,6 +51,29 @@ module Amor
       end
     end
 
+    describe '#max' do
+      before(:each) do
+        @expression = Expression.new([[3, double('Variable')], [-2, double('Variable')]])
+      end
+
+      it 'returns an Objective' do
+        expect(@model.max(@expression)).to be_a(Objective)
+      end
+
+      it 'returns an Objective with the direction set to :max' do
+        expect(@model.max(@expression).direction).to eq(:maximize)
+      end
+
+      it 'returns an Objective with the expression set to the given Expression' do
+        expect(@model.max(@expression).expression).to equal(@expression)
+      end
+
+      it 'stores the objective in the model' do
+        objective = @model.max(@expression)
+        expect(@model.objective).to equal(objective)
+      end
+    end
+
     describe '.from_string' do
       before(:each) do
         @string = "x(3) + 3 * x(2) + 4.0"
