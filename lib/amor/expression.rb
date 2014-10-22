@@ -32,11 +32,11 @@ module Amor
     end
 
     def eql? value
-      self == value
+      self.hash == value.hash
     end
 
     def == value
-      self.hash == value.hash
+      Constraint.new(self, :equal, value)
     end
 
     def <= value
