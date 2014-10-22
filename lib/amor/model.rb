@@ -18,5 +18,10 @@ module Amor
       return model
     end
 
+    # Create a model from a file
+    def self.from_file(filename)
+      Model.from_string(File.read(filename))
+    end
+
   end
 end
