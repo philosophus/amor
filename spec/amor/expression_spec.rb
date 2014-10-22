@@ -7,6 +7,48 @@ module Amor
       @expression = Expression.new([[2, @variable]])
     end
 
+    describe '.new' do
+      context 'when used with another Expression' do
+        before(:each) do
+          @other_variable = double('Variable')
+          @other_expression = Expression.new([[3.0, @other_variable]])
+        end
+
+        it 'Copys the Expression' do
+          expect(Expression.new(@other_expression).factors).to eq(@other_expression.factors)
+        end
+      end
+
+      context 'when used with an Array of factors' do
+        before(:each) do
+          @factors = [[3.0, double('Variable')]]
+        end
+
+        it 'Creates an Expression with the given factors' do
+          expect(Expression.new(@factors).factors).to eq(@factors)
+        end
+      end
+
+      context 'when used with a Variable' do
+        before(:each) do
+          @variable = Variable.new(double('Model'),1)
+        end
+
+        it 'Creates an Expression with the given variable as factor with scalar 1' do
+          expect(Expression.new(@variable).factors).to eq([[1, @variable]])
+        end
+      end
+
+      [-3, -3.0].each do |number|
+        context "when used with a #{number.class}" do
+          it 'Creates an Expression with the given number as a constant factor' do
+            expect(Expression.new(number).factors).to eq([[number, :constant]])
+          end
+        end
+      end
+
+    end
+
     describe '#+' do
       context 'when used with another Expression' do
         before(:each) do

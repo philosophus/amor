@@ -3,8 +3,16 @@ module Amor
 
     attr_reader :factors
 
-    def initialize(factors)
-      @factors = factors
+    def initialize(value)
+      if value.is_a? Array
+        @factors = value
+      elsif value.is_a? Expression
+        @factors = value.factors
+      elsif value.is_a? Variable
+        @factors = [[1, value]]
+      elsif value.is_a? Numeric
+        @factors = [[value, :constant]]
+      end
     end
 
     def +(value)
