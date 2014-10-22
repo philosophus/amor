@@ -27,5 +27,15 @@ module Amor
         expect(@model.x(1).index).to equal(1)
       end
     end
+
+    describe '.from_string' do
+      before(:each) do
+        @string = "x(3) + 3 * x(2) + 4.0"
+      end
+
+      it 'returns a Model' do
+        expect(Model.from_string(@string)).to be_a(Model)
+      end
+    end
   end
 end

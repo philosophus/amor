@@ -11,5 +11,12 @@ module Amor
       @variables[@indices[index] ||= @indices.size] ||= Variable.new(self, index)
     end
 
+    # Create a model from a given string
+    def self.from_string(string)
+      model = Model.new
+      model.instance_eval(string)
+      return model
+    end
+
   end
 end
