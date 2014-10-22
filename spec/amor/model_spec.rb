@@ -92,11 +92,21 @@ module Amor
 
     describe '.from_string' do
       before(:each) do
-        @string = "x(3) + 3 * x(2) + 4.0"
+        @string = "min x(3) + 3 * x(2) + 4.0\nst x(2) - 2.0 * x(3) <= 5.0"
       end
 
       it 'returns a Model' do
         expect(Model.from_string(@string)).to be_a(Model)
+      end
+
+      it 'returns a Model with the specified objective' do
+        model = Model.from_string(@string)
+        expect(model.objective.expression.factors).to eq([[1, model.x(3)], [3, model.x(2)], [4.0, :constant]])
+      end
+
+      it 'returns a Model with the specified constraint' do
+        model = Model.from_string(@string)
+        expect(model.constraints[0].lhs.factors).to eq([[1, model.x(2)], [-2.0, model.x(3)]])
       end
     end
   end
