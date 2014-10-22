@@ -20,5 +20,16 @@ module Amor
         expect(Constraint.new(@lhs, :lesser_equal, @rhs).relation).to eq(:lesser_equal)
       end
     end
+
+    describe '#lp_string' do
+      it 'returns a LP format ready version of the constraint' do
+        model = Model.new
+        v1 = model.x(1)
+        v2 = model.x(2)
+        v3 = model.x(3)
+        expect(Constraint.new(Expression.new([[3, v1], [-2.0, v2], [2, :constant], [2.5, v3]]), :lesser_equal, Expression.new(5)).lp_string).to eq('3 x1 - 2.0 x2 + 2.5 x3 <= 3')
+      end
+    end
+
   end
 end
