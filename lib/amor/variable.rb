@@ -16,7 +16,9 @@ module Amor
       if value.is_a? Expression
         Expression.new([[1, self]] + value.factors)
       elsif value.is_a? Variable
-        Expression.new([[1,self], [1, value]])
+        Expression.new([[1, self], [1, value]])
+      elsif value.is_a? Numeric
+        Expression.new([[1, self], [value, :constant]])
       end
     end
 
