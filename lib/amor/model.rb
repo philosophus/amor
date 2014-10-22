@@ -57,5 +57,9 @@ module Amor
       return result
     end
 
+    def save_lp(filename)
+      File.open(filename, 'w') {|file| file.puts self.lp_string}
+    end
+
   end
 end

@@ -27,5 +27,21 @@ module Amor
     def internal_index
       @model.internal_index(self.index)
     end
+
+    def == value
+      Constraint.new(self, :equal, value)
+    end
+
+    def <= value
+      Constraint.new(self, :lesser_equal, value)
+    end
+
+    def >= value
+      Constraint.new(self, :greater_equal, value)
+    end
+
+    def to_s
+      "x(#{index})"
+    end
   end
 end

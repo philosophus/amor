@@ -242,9 +242,10 @@ module Amor
 
     describe '#remove_constants' do
       it 'returns an Expression containing all but the constant factors' do
-        v1 = double('Variable')
-        v2 = double('Variable')
-        v3 = double('Variable')
+        model = Model.new
+        v1 = model.x(1)
+        v2 = model.x(2)
+        v3 = model.x(3)
         factors = Expression.new([[3, v1], [-2.0, v2], [-1, v1], [2, :constant], [2.5, v3], [1, v2], [-2.0, :constant], [3, :constant], [-2.5, v3]]).remove_constants.factors
         expect(factors).to eq([[3, v1], [-2.0, v2], [-1, v1], [2.5, v3], [1, v2], [-2.5, v3]])
       end
@@ -252,9 +253,10 @@ module Amor
 
     describe '#constant_factor' do
       it 'returns the total constant factor' do
-        v1 = double('Variable')
-        v2 = double('Variable')
-        v3 = double('Variable')
+        model = Model.new
+        v1 = model.x(1)
+        v2 = model.x(2)
+        v3 = model.x(3)
         expect(Expression.new([[3, v1], [-2.0, v2], [-1, v1], [2, :constant], [2.5, v3], [1, v2], [-2.0, :constant], [3, :constant], [-2.5, v3]]).constant_factor).to eq(3.0)
       end
     end

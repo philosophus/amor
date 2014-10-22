@@ -56,11 +56,11 @@ module Amor
     end
 
     def remove_constants
-      Expression.new(@factors.select{|factor| factor[1] != :constant})
+      Expression.new(@factors.select{|factor| factor[1].is_a?(Variable)})
     end
 
     def constant_factor
-      @factors.select{|factor| factor[1] == :constant}.inject(0) {|m, factor| m + factor[0]}
+      @factors.select{|factor| !factor[1].is_a?(Variable)}.inject(0) {|m, factor| m + factor[0]}
     end
 
     def lp_string
@@ -76,13 +76,17 @@ module Amor
           sign = ''
         end
 
-        if factor[1] == :constant
-          "#{sign}#{scalar}"
-        else
+        if factor[1].is_a? Variable
           "#{sign}#{scalar} x#{factor[1].internal_index+1}"
+        else
+          "#{sign}#{scalar}"
         end
       end
       return factor_strings.join(' ')
+    end
+
+    def to_s
+      factors.map{|factor| factor[1].is_a?(Variable) ? "#{factor[0]} #{factor[1]}" : "#{factor[0]}"}.join(" ")
     end
   end
 end

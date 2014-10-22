@@ -21,5 +21,17 @@ module Amor
 
       "#{temp_lhs.remove_constants.lp_string} #{relation_string} #{-temp_lhs.constant_factor}"
     end
+
+    def to_s
+      relation_string = case @relation
+        when :greater_equal
+          ">="
+        when :lesser_equal
+          "<="
+        else
+          "=="
+        end
+      "#{@lhs} #{relation_string} #{@rhs}"
+    end
   end
 end
