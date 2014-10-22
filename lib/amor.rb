@@ -1,5 +1,3 @@
-require "amor/version"
+require 'require_all'
 
-module Amor
-  # Your code goes here...
-end
+require_all 'lib/amor'
