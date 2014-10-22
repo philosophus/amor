@@ -249,5 +249,15 @@ module Amor
         expect(factors).to eq([[3, v1], [-2.0, v2], [-1, v1], [2.5, v3], [1, v2], [-2.5, v3]])
       end
     end
+
+    describe '#constant_factor' do
+      it 'returns the total constant factor' do
+        v1 = double('Variable')
+        v2 = double('Variable')
+        v3 = double('Variable')
+        expect(Expression.new([[3, v1], [-2.0, v2], [-1, v1], [2, :constant], [2.5, v3], [1, v2], [-2.0, :constant], [3, :constant], [-2.5, v3]]).constant_factor).to eq(3.0)
+      end
+    end
+
   end
 end

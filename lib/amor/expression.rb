@@ -59,5 +59,8 @@ module Amor
       Expression.new(@factors.select{|factor| factor[1] != :constant})
     end
 
+    def constant_factor
+      @factors.select{|factor| factor[1] == :constant}.inject(0) {|m, factor| m + factor[0]}
+    end
   end
 end
