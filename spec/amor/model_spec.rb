@@ -42,7 +42,7 @@ module Amor
       end
 
       it 'returns an Objective with the expression set to the given Expression' do
-        expect(@model.min(@expression).expression).to equal(@expression)
+        expect(@model.min(@expression).expression).to eql(@expression)
       end
 
       it 'stores the objective in the model' do
@@ -65,7 +65,7 @@ module Amor
       end
 
       it 'returns an Objective with the expression set to the given Expression' do
-        expect(@model.max(@expression).expression).to equal(@expression)
+        expect(@model.max(@expression).expression).to eql(@expression)
       end
 
       it 'stores the objective in the model' do

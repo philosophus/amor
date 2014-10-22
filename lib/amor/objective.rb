@@ -5,7 +5,7 @@ module Amor
 
     def initialize(direction, expression)
       @direction = direction
-      @expression = expression
+      @expression = Expression.new(expression)
     end
 
   end

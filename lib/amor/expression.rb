@@ -26,5 +26,17 @@ module Amor
     def -@
       return Expression.new(self.factors.map{|factor| [-factor[0], factor[1]]})
     end
+
+    def hash
+      @factors.hash
+    end
+
+    def eql? value
+      self == value
+    end
+
+    def == value
+      self.hash == value.hash
+    end
   end
 end
