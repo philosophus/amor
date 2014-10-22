@@ -109,5 +109,12 @@ module Amor
         expect(model.constraints[0].lhs.factors).to eq([[1, model.x(2)], [-2.0, model.x(3)]])
       end
     end
+
+    describe '.lp_string' do
+      it 'returns a LP Format ready string of the model' do
+        model = Model.from_string("min x(3) + 3 * x(2) + 4.0\nst x(2) - 2.0 * x(3) <= 5.0")
+        expect(model.lp_string).to eq("Minimize\n obj: 1 x1 + 3 x2 + 4.0\nSubject To\n c1: 1 x2 - 2.0 x1 <= 5.0\nEnd")
+      end
+    end
   end
 end

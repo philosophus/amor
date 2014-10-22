@@ -47,5 +47,15 @@ module Amor
       @indices[index]
     end
 
+    def lp_string
+      result = @objective.lp_string
+      result << "\nSubject To\n"
+      result << @constraints.each_with_index.map do |constraint, i|
+        " c#{i+1}: #{constraint.lp_string}"
+      end.join("\n")
+      result << "\nEnd"
+      return result
+    end
+
   end
 end
