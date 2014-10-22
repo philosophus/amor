@@ -38,5 +38,9 @@ module Amor
     def == value
       self.hash == value.hash
     end
+
+    def <= value
+      Constraint.new(self, :lesser_equal, value)
+    end
   end
 end
