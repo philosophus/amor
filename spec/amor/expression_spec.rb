@@ -239,5 +239,15 @@ module Amor
         expect(Expression.new([[3, v1], [-2.0, v2], [-1, v1], [2, :constant], [2.5, v3], [1, v2], [-2.0, :constant], [3, :constant], [-2.5, v3]]).simplified.factors.flatten).not_to include(v3)
       end
     end
+
+    describe '#remove_constants' do
+      it 'returns an Expression containing all but the constant factors' do
+        v1 = double('Variable')
+        v2 = double('Variable')
+        v3 = double('Variable')
+        factors = Expression.new([[3, v1], [-2.0, v2], [-1, v1], [2, :constant], [2.5, v3], [1, v2], [-2.0, :constant], [3, :constant], [-2.5, v3]]).remove_constants.factors
+        expect(factors).to eq([[3, v1], [-2.0, v2], [-1, v1], [2.5, v3], [1, v2], [-2.5, v3]])
+      end
+    end
   end
 end

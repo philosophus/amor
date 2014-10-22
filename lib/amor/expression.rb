@@ -55,5 +55,9 @@ module Amor
       Expression.new(summed_scalars.map{|var, scalar| [scalar, var]}.select{|factor| !factor[0].zero? })
     end
 
+    def remove_constants
+      Expression.new(@factors.select{|factor| factor[1] != :constant})
+    end
+
   end
 end
