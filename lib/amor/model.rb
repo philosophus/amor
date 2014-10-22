@@ -1,5 +1,9 @@
+require 'amor/objective'
+
 module Amor
   class Model
+
+    attr_reader :objective
 
     def initialize
       @variables = Array.new
@@ -9,6 +13,10 @@ module Amor
     # Return the variable for that index if already existing or a new one
     def x(index)
       @variables[@indices[index] ||= @indices.size] ||= Variable.new(self, index)
+    end
+
+    def min(expression)
+      @objective = Objective.new(:minimize, expression)
     end
 
     # Create a model from a given string
