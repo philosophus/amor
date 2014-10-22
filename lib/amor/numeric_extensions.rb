@@ -21,7 +21,7 @@ class Fixnum
 
   old_subtraction = instance_method(:'-')
   define_method(:'-') do |value|
-    if value.is_a? Amor::Expression
+    if value.is_a?(Amor::Expression) || value.is_a?(Amor::Variable)
       self + -value
     else
       old_subtraction.bind(self).(value)
@@ -55,7 +55,7 @@ class Float
 
   old_subtraction = instance_method(:'-')
   define_method(:'-') do |value|
-    if value.is_a? Amor::Expression
+    if value.is_a?(Amor::Expression) || value.is_a?(Amor::Variable)
       self + -value
     else
       old_subtraction.bind(self).(value)
