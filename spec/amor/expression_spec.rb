@@ -259,5 +259,15 @@ module Amor
       end
     end
 
+    describe '#lp_string' do
+      it 'returns a string representation feasible for the LP file format' do
+        model = Model.new
+        v1 = model.x(1)
+        v2 = model.x(2)
+        v3 = model.x(3)
+        expect(Expression.new([[3, v1], [-2.0, v2], [-1, v1], [2, :constant], [2.5, v3], [1, v2], [-2.0, :constant], [3, :constant], [-2.5, v3]]).lp_string).to eq('2 x1 - 1.0 x2 + 3.0')
+      end
+    end
+
   end
 end

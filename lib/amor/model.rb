@@ -43,5 +43,9 @@ module Amor
       Model.from_string(File.read(filename))
     end
 
+    def internal_index(index)
+      @indices[index]
+    end
+
   end
 end

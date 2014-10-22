@@ -23,5 +23,9 @@ module Amor
     def -@
       Expression.new([[-1, self]])
     end
+
+    def internal_index
+      @model.internal_index(self.index)
+    end
   end
 end

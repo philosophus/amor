@@ -121,5 +121,20 @@ module Amor
         expect((-@variable).factors).to eq([[-1, @variable]])
       end
     end
+
+    describe '#internal_index' do
+      before(:each) do
+        @model = Model.new
+      end
+
+      it 'returns 0 for the first variable' do
+        expect(@model.x(1).internal_index).to eq(0)
+      end
+
+      it 'returns 1 for the second variable' do
+        @model.x(1)
+        expect(@model.x(2).internal_index).to eq(1)
+      end
+    end
   end
 end

@@ -62,5 +62,27 @@ module Amor
     def constant_factor
       @factors.select{|factor| factor[1] == :constant}.inject(0) {|m, factor| m + factor[0]}
     end
+
+    def lp_string
+      result = ''
+      factor_strings = self.simplified.factors.each_with_index.map do |factor, i|
+        scalar = factor[0]
+        if scalar < 0
+          sign = '- '
+          scalar = -scalar
+        elsif i > 0
+          sign = '+ '
+        else
+          sign = ''
+        end
+
+        if factor[1] == :constant
+          "#{sign}#{scalar}"
+        else
+          "#{sign}#{scalar} x#{factor[1].internal_index+1}"
+        end
+      end
+      return factor_strings.join(' ')
+    end
   end
 end
