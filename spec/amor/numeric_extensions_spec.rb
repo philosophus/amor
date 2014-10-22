@@ -34,6 +34,19 @@ module Amor
             expect((number + @expression).factors).to eq([[number, :constant], [2.0, @variable]])
           end
         end
+
+        context 'when used with a variable' do
+          before(:each) do
+            @variable = Variable.new(double('Model'), 1)
+          end
+          it 'returns an Expression' do
+            expect(number + @variable).to be_a(Expression)
+          end
+
+          it 'returns an Expression with the first factor set to the constant and the second to the variable with scalar 1' do
+            expect((number + @variable).factors).to eq([[number, :constant], [1, @variable]])
+          end
+          end
       end
 
       describe '#-' do
