@@ -79,6 +79,18 @@ module Amor
           expect((@expression - @other_variable).factors).to eq([[2, @variable], [-1, @other_variable]])
         end
       end
+
+      [4, 4.0].each do |number|
+        context "when used with a #{number.class}" do
+          it 'returns an Expression' do
+            expect(@expression - number).to be_a(Expression)
+          end
+
+          it 'returns an Expression with the the last factor set to the corresponding negative constant' do
+            expect((@expression - number).factors).to eq([[2, @variable], [-number, :constant]])
+          end
+        end
+      end
     end
 
     describe '#-@' do
