@@ -1,3 +1,6 @@
+require 'amor/variable'
+require 'amor/expression'
+
 class Fixnum
   old_multiplication = instance_method(:'*')
   define_method(:'*') do |value|
