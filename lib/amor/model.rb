@@ -3,7 +3,7 @@ require 'amor/objective'
 module Amor
   class Model
 
-    attr_reader :objective
+    attr_reader :objective, :constraints
 
     def initialize
       @variables = Array.new
@@ -23,6 +23,12 @@ module Amor
     # Add a maximization objective
     def max(expression)
       @objective = Objective.new(:maximize, expression)
+    end
+
+    # Add a constraint
+    def st(constraint)
+      (@constraints ||= Array.new) << constraint
+      return constraint
     end
 
     # Create a model from a given string

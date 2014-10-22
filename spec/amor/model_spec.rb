@@ -74,6 +74,22 @@ module Amor
       end
     end
 
+    describe '#st' do
+      before(:each) do
+        @constraint = Constraint.new(1, :greater_equal, Variable.new(double('Model'), 1))
+      end
+
+      it 'returns the given Constraint' do
+        expect(@model.st(@constraint)).to equal(@constraint)
+      end
+
+      it 'stores the constraint in the model' do
+        @model.st(@constraint)
+        expect(@model.constraints).to include(@constraint)
+      end
+    end
+
+
     describe '.from_string' do
       before(:each) do
         @string = "x(3) + 3 * x(2) + 4.0"
