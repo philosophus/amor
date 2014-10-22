@@ -168,5 +168,31 @@ module Amor
         end
       end
     end
+
+    describe '#>=' do
+      context 'when used with another Expression' do
+        before(:each) do
+          @other_expression = Expression.new(5.0)
+        end
+
+        it 'returns a Constraint' do
+          expect(@expression >= @other_expression).to be_a(Constraint)
+        end
+
+        it 'sets the Constraints relation to :greater_equal' do
+          expect((@expression >= @other_expression).relation).to eq(:greater_equal)
+        end
+
+        it 'sets the lhs of the Constraint to self' do
+          expect((@expression >= @other_expression).lhs).to eql(@expression)
+        end
+
+        it 'sets the rhs of the Constraint to the other Expression' do
+          expect((@expression >= @other_expression).rhs).to eql(@other_expression)
+        end
+      end
+    end
+
+
   end
 end

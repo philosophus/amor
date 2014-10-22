@@ -42,5 +42,10 @@ module Amor
     def <= value
       Constraint.new(self, :lesser_equal, value)
     end
+
+    def >= value
+      Constraint.new(self, :greater_equal, value)
+    end
+
   end
 end
