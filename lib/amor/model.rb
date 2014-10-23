@@ -8,6 +8,7 @@ module Amor
     def initialize
       @variables = Array.new
       @indices = Hash.new
+      @constraints = Array.new
     end
 
     # Return the variable for that index if already existing or a new one
@@ -27,7 +28,7 @@ module Amor
 
     # Add a constraint
     def st(constraint)
-      (@constraints ||= Array.new) << constraint
+      @constraints << constraint
       return constraint
     end
 
@@ -63,8 +64,12 @@ module Amor
 
     def for_all(container)
       container.each do |e|
-        yield(e)
+        result = yield(e)
+        if result.is_a?(Constraint)
+          self.st result
+        end
       end
+      return nil
     end
 
     def sum(container)

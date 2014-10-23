@@ -125,6 +125,17 @@ module Amor
       it 'calls the block with the elements from the provided collection' do
         expect { |b| @model.for_all([1,2,4], &b) }.to yield_successive_args(1,2,4)
       end
+
+      it 'returns nil' do
+        expect(@model.for_all([1,2]) {}).to eq(nil)
+      end
+
+      it 'registers a Constraint with the model' do
+        c = []
+        @model.for_all([1,2]) {|i| c[i] = (@model.x(i) <= i)}
+        expect(@model.constraints).to include(c[1])
+        expect(@model.constraints).to include(c[2])
+      end
     end
 
     describe '#sum' do
