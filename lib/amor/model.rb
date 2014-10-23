@@ -8,28 +8,33 @@ module Amor
     def initialize
       @variables = Array.new
       @indices = Hash.new
+      @constraints = Array.new
     end
 
     # Return the variable for that index if already existing or a new one
     def x(index)
       @variables[@indices[index] ||= @indices.size] ||= Variable.new(self, index)
     end
+    alias :var :x
 
     # Add a minimization objective
     def min(expression)
       @objective = Objective.new(:minimize, expression)
     end
+    alias :minimize :min
 
     # Add a maximization objective
     def max(expression)
       @objective = Objective.new(:maximize, expression)
     end
+    alias :maximize :max
 
     # Add a constraint
     def st(constraint)
-      (@constraints ||= Array.new) << constraint
+      @constraints << constraint
       return constraint
     end
+    alias :subject_to :st
 
     # Create a model from a given string
     def self.from_string(string)
@@ -53,6 +58,21 @@ module Amor
       result << @constraints.each_with_index.map do |constraint, i|
         " c#{i+1}: #{constraint.lp_string}"
       end.join("\n")
+
+      # Bounds section
+      bounded_vars = @variables.each_with_index.select{|v| v[0].lb}
+      result << "\nBounds" if bounded_vars.size > 0
+      bounded_vars.each{|v| result << "\n 0 <= x#{v[1]+1}"}
+
+      # Variable type section
+      integer_vars = @variables.each_with_index.select{|v| v[0].type == :integer}
+      result << "\nGenerals\n " if integer_vars.size > 0
+      result << integer_vars.map{|v| "x#{v[1]+1}"}.join(" ")
+
+      binary_vars = @variables.each_with_index.select{|v| v[0].type == :binary}
+      result << "\nBinary\n " if binary_vars.size > 0
+      result << binary_vars.map{|v| "x#{v[1]+1}"}.join(" ")
+
       result << "\nEnd"
       return result
     end
@@ -61,5 +81,38 @@ module Amor
       File.open(filename, 'w') {|file| file.puts self.lp_string}
     end
 
+    def for_all(container)
+      container.each do |e|
+        result = yield(e)
+        if result.is_a?(Constraint)
+          self.st result
+        end
+      end
+      return nil
+    end
+    alias :forall :for_all
+
+    def sum(container)
+      container[1..-1].inject(yield(container[0])) do |m, e|
+        m + yield(e)
+      end
+    end
+
+    def integer(variable)
+      variable.type = :integer
+      return variable
+    end
+    alias :int :integer
+
+    def binary(variable)
+      variable.type = :binary
+      return variable
+    end
+    alias :bin :binary
+
+    def positive(variable)
+      variable.lb = 0
+      return variable
+    end
   end
 end
