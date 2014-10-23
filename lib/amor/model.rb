@@ -15,22 +15,26 @@ module Amor
     def x(index)
       @variables[@indices[index] ||= @indices.size] ||= Variable.new(self, index)
     end
+    alias :var :x
 
     # Add a minimization objective
     def min(expression)
       @objective = Objective.new(:minimize, expression)
     end
+    alias :minimize :min
 
     # Add a maximization objective
     def max(expression)
       @objective = Objective.new(:maximize, expression)
     end
+    alias :maximize :max
 
     # Add a constraint
     def st(constraint)
       @constraints << constraint
       return constraint
     end
+    alias :subject_to :st
 
     # Create a model from a given string
     def self.from_string(string)
@@ -71,6 +75,7 @@ module Amor
       end
       return nil
     end
+    alias :forall :for_all
 
     def sum(container)
       container[1..-1].inject(yield(container[0])) do |m, e|
