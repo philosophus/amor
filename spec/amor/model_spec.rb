@@ -153,7 +153,7 @@ module Amor
         expect(@model.integer(@model.x(1))).to be_a(Variable)
       end
 
-      it 'sets the type of the variable to :integer' do
+      it 'sets the type of the Variable to :integer' do
         @model.integer(@model.x(1))
         expect(@model.x(1).type).to eq(:integer)
       end
@@ -164,9 +164,20 @@ module Amor
         expect(@model.binary(@model.x(1))).to be_a(Variable)
       end
 
-      it 'sets the type of the variable to :binary' do
+      it 'sets the type of the Variable to :binary' do
         @model.binary(@model.x(1))
         expect(@model.x(1).type).to eq(:binary)
+      end
+    end
+
+    describe '#positive' do
+      it 'returns a Variable' do
+        expect(@model.positive(@model.x(1))).to be_a(Variable)
+      end
+
+      it 'sets the variables lower bound to 0' do
+        @model.positive(@model.x(1))
+        expect(@model.x(1).lb).to eq(0)
       end
     end
   end

@@ -95,5 +95,9 @@ module Amor
     end
     alias :bin :binary
 
+    def positive(variable)
+      variable.lb = 0
+      return variable
+    end
   end
 end
