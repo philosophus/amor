@@ -158,5 +158,16 @@ module Amor
         expect(@model.x(1).type).to eq(:integer)
       end
     end
+
+    describe '#binary' do
+      it 'returns a Variable' do
+        expect(@model.binary(@model.x(1))).to be_a(Variable)
+      end
+
+      it 'sets the type of the variable to :binary' do
+        @model.binary(@model.x(1))
+        expect(@model.x(1).type).to eq(:binary)
+      end
+    end
   end
 end

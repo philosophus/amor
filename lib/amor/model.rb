@@ -87,6 +87,13 @@ module Amor
       variable.type = :integer
       return variable
     end
+    alias :int :integer
+
+    def binary(variable)
+      variable.type = :binary
+      return variable
+    end
+    alias :bin :binary
 
   end
 end
