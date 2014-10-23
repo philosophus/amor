@@ -58,6 +58,21 @@ module Amor
       result << @constraints.each_with_index.map do |constraint, i|
         " c#{i+1}: #{constraint.lp_string}"
       end.join("\n")
+
+      # Bounds section
+      bounded_vars = @variables.each_with_index.select{|v| v[0].lb}
+      result << "\nBounds" if bounded_vars.size > 0
+      bounded_vars.each{|v| result << "\n 0 <= x#{v[1]+1}"}
+
+      # Variable type section
+      integer_vars = @variables.each_with_index.select{|v| v[0].type == :integer}
+      result << "\nGenerals\n " if integer_vars.size > 0
+      result << integer_vars.map{|v| "x#{v[1]+1}"}.join(" ")
+
+      binary_vars = @variables.each_with_index.select{|v| v[0].type == :binary}
+      result << "\nBinary\n " if binary_vars.size > 0
+      result << binary_vars.map{|v| "x#{v[1]+1}"}.join(" ")
+
       result << "\nEnd"
       return result
     end

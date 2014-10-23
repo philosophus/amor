@@ -112,8 +112,8 @@ module Amor
 
     describe '#lp_string' do
       it 'returns a LP Format ready string of the model' do
-        model = Model.from_string("min x(3) + 3 * x(2) + 4.0\nst x(2) - 2.0 * x(3) <= 5.0")
-        expect(model.lp_string).to eq("Minimize\n obj: 1 x1 + 3 x2 + 4.0\nSubject To\n c1: 1 x2 - 2.0 x1 <= 5.0\nEnd")
+        model = Model.from_string("min x(3) + 3 * x(2) + 4.0\nst x(2) - 2.0 * x(3) <= 5.0\nbinary x(2)\npositive integer x(3)")
+        expect(model.lp_string).to eq("Minimize\n obj: 1 x1 + 3 x2 + 4.0\nSubject To\n c1: 1 x2 - 2.0 x1 <= 5.0\nBounds\n 0 <= x1\nGenerals\n x1\nBinary\n x2\nEnd")
       end
     end
 
