@@ -147,5 +147,16 @@ module Amor
         expect(@model.sum([1,2,3]) {|i| i * @model.x(i)}).to eql(@model.x(1) + 2 * @model.x(2) + 3 * @model.x(3))
       end
     end
+
+    describe '#integer' do
+      it 'returns a Variable' do
+        expect(@model.integer(@model.x(1))).to be_a(Variable)
+      end
+
+      it 'sets the type of the variable to :integer' do
+        @model.integer(@model.x(1))
+        expect(@model.x(1).type).to eq(:integer)
+      end
+    end
   end
 end

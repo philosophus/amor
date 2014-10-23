@@ -3,6 +3,8 @@ module Amor
 
     attr_reader :model, :index
 
+    attr_accessor :type
+
     def initialize(model, index)
       @model = model
       @index = index

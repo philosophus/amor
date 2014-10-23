@@ -82,5 +82,11 @@ module Amor
         m + yield(e)
       end
     end
+
+    def integer(variable)
+      variable.type = :integer
+      return variable
+    end
+
   end
 end
