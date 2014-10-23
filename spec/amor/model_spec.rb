@@ -110,10 +110,20 @@ module Amor
       end
     end
 
-    describe '.lp_string' do
+    describe '#lp_string' do
       it 'returns a LP Format ready string of the model' do
         model = Model.from_string("min x(3) + 3 * x(2) + 4.0\nst x(2) - 2.0 * x(3) <= 5.0")
         expect(model.lp_string).to eq("Minimize\n obj: 1 x1 + 3 x2 + 4.0\nSubject To\n c1: 1 x2 - 2.0 x1 <= 5.0\nEnd")
+      end
+    end
+
+    describe '#for_all' do
+      it 'repeats the block for each element in the provided collection' do
+        expect { |b| @model.for_all([1,2,3], &b) }.to yield_control.exactly(3).times
+      end
+
+      it 'calls the block with the elements from the provided collection' do
+        expect { |b| @model.for_all([1,2,4], &b) }.to yield_successive_args(1,2,4)
       end
     end
   end

@@ -61,5 +61,11 @@ module Amor
       File.open(filename, 'w') {|file| file.puts self.lp_string}
     end
 
+    def for_all(container)
+      container.each do |e|
+        yield(e)
+      end
+    end
+
   end
 end
