@@ -112,8 +112,8 @@ module Amor
 
     describe '#lp_string' do
       it 'returns a LP Format ready string of the model' do
-        model = Model.from_string("min x(3) + 3 * x(2) + 4.0\nst x(2) - 2.0 * x(3) <= 5.0")
-        expect(model.lp_string).to eq("Minimize\n obj: 1 x1 + 3 x2 + 4.0\nSubject To\n c1: 1 x2 - 2.0 x1 <= 5.0\nEnd")
+        model = Model.from_string("min x(3) + 3 * x(2) + 4.0\nst x(2) - 2.0 * x(3) <= 5.0\nbinary x(2)\npositive integer x(3)")
+        expect(model.lp_string).to eq("Minimize\n obj: 1 x1 + 3 x2 + 4.0\nSubject To\n c1: 1 x2 - 2.0 x1 <= 5.0\nBounds\n 0 <= x1\nGenerals\n x1\nBinary\n x2\nEnd")
       end
     end
 
@@ -145,6 +145,39 @@ module Amor
 
       it 'sums up the results from the provided block for each element in the collection' do
         expect(@model.sum([1,2,3]) {|i| i * @model.x(i)}).to eql(@model.x(1) + 2 * @model.x(2) + 3 * @model.x(3))
+      end
+    end
+
+    describe '#integer' do
+      it 'returns a Variable' do
+        expect(@model.integer(@model.x(1))).to be_a(Variable)
+      end
+
+      it 'sets the type of the Variable to :integer' do
+        @model.integer(@model.x(1))
+        expect(@model.x(1).type).to eq(:integer)
+      end
+    end
+
+    describe '#binary' do
+      it 'returns a Variable' do
+        expect(@model.binary(@model.x(1))).to be_a(Variable)
+      end
+
+      it 'sets the type of the Variable to :binary' do
+        @model.binary(@model.x(1))
+        expect(@model.x(1).type).to eq(:binary)
+      end
+    end
+
+    describe '#positive' do
+      it 'returns a Variable' do
+        expect(@model.positive(@model.x(1))).to be_a(Variable)
+      end
+
+      it 'sets the variables lower bound to 0' do
+        @model.positive(@model.x(1))
+        expect(@model.x(1).lb).to eq(0)
       end
     end
   end
