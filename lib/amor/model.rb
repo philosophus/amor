@@ -67,5 +67,10 @@ module Amor
       end
     end
 
+    def sum(container)
+      container[1..-1].inject(yield(container[0])) do |m, e|
+        m + yield(e)
+      end
+    end
   end
 end

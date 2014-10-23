@@ -126,5 +126,15 @@ module Amor
         expect { |b| @model.for_all([1,2,4], &b) }.to yield_successive_args(1,2,4)
       end
     end
+
+    describe '#sum' do
+      it 'returns an Expression' do
+        expect(@model.sum([1,2]) {|i| @model.x(i)}).to be_a(Expression)
+      end
+
+      it 'sums up the results from the provided block for each element in the collection' do
+        expect(@model.sum([1,2,3]) {|i| i * @model.x(i)}).to eql(@model.x(1) + 2 * @model.x(2) + 3 * @model.x(3))
+      end
+    end
   end
 end
