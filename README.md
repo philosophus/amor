@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Visit <a href='http://amor-gem.com'>amor-gem.com</a> for further information
 
 ## Contributing
 

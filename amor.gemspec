@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["me@fdahms.com"]
   spec.summary       = "A versatile, yet simple modelling language for mathematical programming"
   spec.description   = "AMoR is a Ruby DSL for mathematical programming. It allows to simply define a mathematical program, but gives you all the features from Ruby for more complex projects"
-  spec.homepage      = ""
+  spec.homepage      = "http://amor-gem.com"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
