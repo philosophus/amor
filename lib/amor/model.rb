@@ -161,6 +161,7 @@ module Amor
 
     rescue Errno::ENOENT => e
       puts "Could not find SCIP. Please make sure that SCIP is installed and you can execute 'scip'."
+      raise e
     end
   end
 end
