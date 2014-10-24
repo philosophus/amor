@@ -3,7 +3,7 @@ module Amor
 
     attr_reader :model, :index
 
-    attr_accessor :type, :lb, :ub
+    attr_accessor :type, :lb, :ub, :value
     alias :lower_bound :lb
     alias :upper_bound :ub
 

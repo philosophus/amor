@@ -3,7 +3,7 @@ require 'amor/objective'
 module Amor
   class Model
 
-    attr_reader :objective, :constraints
+    attr_reader :constraints, :solved, :bounded
 
     def initialize
       @variables = Array.new
@@ -13,9 +13,24 @@ module Amor
 
     # Return the variable for that index if already existing or a new one
     def x(index)
-      @variables[@indices[index] ||= @indices.size] ||= Variable.new(self, index)
+      variable = @variables[@indices[index] ||= @indices.size] ||= Variable.new(self, index)
+      if @solved
+        variable.value || 0
+      else
+        variable
+      end
     end
     alias :var :x
+
+    def objective
+      if @solved
+        @objective_value
+      else
+        @objective
+      end
+    end
+    alias :obj :objective
+
 
     # Add a minimization objective
     def min(expression)
@@ -113,6 +128,40 @@ module Amor
     def positive(variable)
       variable.lb = 0
       return variable
+    end
+
+    def scip
+      self.save_lp('__temp.lp')
+      scip_result = `scip -f __temp.lp`
+      File.delete('__temp.lp')
+
+      solution_section = false
+      scip_result.each_line do |line|
+        if line =~ /problem is solved \[([\w\s]*)\]/
+          @solved = true
+          if $1 == 'optimal solution found'
+            @bounded = true
+          elsif $1 == 'unbounded'
+            @bounded = false
+          else
+            raise 'Unknown solve status'
+          end
+        end
+
+        solution_section = true if line =~ /primal solution:/
+        solution_section = false if line =~ /Statistics/n
+
+        if solution_section
+          @objective_value = $1 if line =~ /objective value:\s*([\.\d]+)/
+          if line =~ /x(\d+)\s*([\.\d]+)/
+            @variables[$1.to_i-1].value = $2.to_f
+          end
+        end
+      end
+
+    rescue Errno::ENOENT => e
+      puts "Could not find SCIP. Please make sure that SCIP is installed and you can execute 'scip'."
+      raise e
     end
   end
 end
