@@ -164,5 +164,11 @@ module Amor
       puts "Could not find SCIP. Please make sure that SCIP is installed and you can execute 'scip'."
       raise e
     end
+
+    def block
+      @in_block = true
+      yield
+      @in_block = false
+    end
   end
 end

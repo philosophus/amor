@@ -185,5 +185,23 @@ module Amor
         expect(@model.x(1).lb).to eq(0)
       end
     end
+
+    describe '#block' do
+      it 'yields' do
+        expect { |b| @model.block(&b) }.to yield_control
+      end
+
+      it 'sets @in_block true within yield' do
+        @model.block do
+          expect(@model.instance_variable_get('@in_block')).to eq(true)
+        end
+      end
+
+      it 'sets @in_block before leaving' do
+        @model.block do
+        end
+        expect(@model.instance_variable_get('@in_block')).to eq(false)
+      end
+    end
   end
 end
