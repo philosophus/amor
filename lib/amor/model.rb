@@ -165,6 +165,7 @@ module Amor
       raise e
     end
 
+    # Creates a new block and makes sure that constraints added in yield are added to block
     def block
       @in_block = true
       yield
