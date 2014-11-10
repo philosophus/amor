@@ -72,7 +72,7 @@ module Amor
       result = @objective.lp_string
       result << "\nSubject To\n"
       result << @constraints.each_with_index.map do |constraint, i|
-        " c#{i+1}: #{constraint.lp_string}"
+        " #{constraint.lp_string}"
       end.join("\n")
 
       # Bounds section
