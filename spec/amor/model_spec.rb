@@ -87,6 +87,11 @@ module Amor
         @model.st(@constraint)
         expect(@model.constraints).to include(@constraint)
       end
+
+      it 'stores the name, which the constraint would get in an LP file' do
+        @model.st(@constraint)
+        expect(@model.constraints[0].lp_name).to eq("c1")
+      end
     end
 
 
