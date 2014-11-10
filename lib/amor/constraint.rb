@@ -1,7 +1,7 @@
 module Amor
   class Constraint
     attr_reader :lhs, :rhs, :relation
-    attr_accessor :lp_name # The name the constraint assumes in an LP file
+    attr_accessor :index
 
     def initialize(lhs, relation, rhs)
       @lhs = Expression.new(lhs)

@@ -46,7 +46,7 @@ module Amor
 
     # Add a constraint
     def st(constraint)
-      constraint.lp_name = "c#{@constraints.size+1}"
+      constraint.index = @constraints.size
       @constraints << constraint
       return constraint
     end
