@@ -92,6 +92,13 @@ module Amor
         @model.st(@constraint)
         expect(@model.constraints[0].index).to eq(0)
       end
+
+      it 'adds constraint to block if a block is given' do
+        @model.block do
+          @model.st(@constraint)
+        end
+        expect(@model.blocks.last.constraints).to include(@constraint)
+      end
     end
 
 

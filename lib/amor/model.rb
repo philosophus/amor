@@ -48,6 +48,7 @@ module Amor
     def st(constraint)
       constraint.index = @constraints.size
       @constraints << constraint
+      @in_block.add_constraint(constraint) if @in_block
       return constraint
     end
     alias :subject_to :st
