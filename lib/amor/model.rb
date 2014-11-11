@@ -148,14 +148,16 @@ module Amor
     def parse_scip_output(scip_result)
       solution_section = false
       scip_result.each_line do |line|
-        if line =~ /problem is solved \[([\w\s]*)\]/
+        if !@solved && line =~ /problem is solved \[([\w\s]*)\]/
           @solved = true
           if $1 == 'optimal solution found'
             @bounded = true
           elsif $1 == 'unbounded'
             @bounded = false
+          elsif $1 == 'infeasible'
+            @infeasible = true
           else
-            raise 'Unknown solve status'
+            raise "Unknown solve status: #{$1}"
           end
         end
 
