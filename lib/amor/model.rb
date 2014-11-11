@@ -189,5 +189,9 @@ module Amor
 
       result.join("\n")
     end
+
+    def save_dec(filename)
+      File.open(filename, 'w') {|file| file.puts self.dec_string}
+    end
   end
 end
