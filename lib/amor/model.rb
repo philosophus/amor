@@ -173,5 +173,21 @@ module Amor
       yield
       @in_block = nil
     end
+
+    def dec_string
+      result = ["NBLOCKS #{@blocks.size}"]
+
+      @blocks.each_with_index do |block, i|
+        result << block.dec_string(i + 1)
+      end
+
+      result << "MASTERCONSS"
+      # Remaining constraints
+      @blocks.inject(@constraints) {|mem, block| mem - block.constraints}.each do |constraint|
+        result << constraint.lp_name
+      end
+
+      result.join("\n")
+    end
   end
 end

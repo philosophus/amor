@@ -215,5 +215,20 @@ module Amor
         expect(@model.blocks.size).to eq(1)
       end
     end
+
+    describe '#dec_string' do
+      it 'returns a string representation of specified decomposition in .dec file format' do
+        @model.st(@model.x(1) + @model.x(2) >= 3)
+        @model.block do
+          @model.st(@model.x(1) + @model.x(3) <= 1)
+          @model.st(@model.x(2) - @model.x(4) <= 2)
+        end
+        @model.block do
+          @model.st(@model.x(1) - @model.x(5) >= 1)
+        end
+        @model.st(@model.x(3) + @model.x(4) == 2)
+        expect(@model.dec_string).to eq("NBLOCKS 2\nBLOCK 1\nc2\nc3\nBLOCK 2\nc4\nMASTERCONSS\nc1\nc5")
+      end
+    end
   end
 end
