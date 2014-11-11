@@ -175,7 +175,7 @@ module Amor
     end
 
     def dec_string
-      result = ["NBLOCKS #{@blocks.size}"]
+      result = ["PRESOLVED 0", "NBLOCKS #{@blocks.size}"]
 
       @blocks.each_with_index do |block, i|
         result << block.dec_string(i + 1)
