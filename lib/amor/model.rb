@@ -3,7 +3,7 @@ require 'amor/objective'
 module Amor
   class Model
 
-    attr_reader :constraints, :solved, :bounded
+    attr_reader :constraints, :solved, :bounded, :blocks
 
     def initialize
       @variables = Array.new
@@ -167,9 +167,10 @@ module Amor
 
     # Creates a new block and makes sure that constraints added in yield are added to block
     def block
-      @in_block = true
+      (@blocks ||= Array.new) << Block.new
+      @in_block = @blocks.last
       yield
-      @in_block = false
+      @in_block = nil
     end
   end
 end

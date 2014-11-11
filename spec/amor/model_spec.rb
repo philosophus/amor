@@ -191,16 +191,21 @@ module Amor
         expect { |b| @model.block(&b) }.to yield_control
       end
 
-      it 'sets @in_block true within yield' do
+      it 'sets @in_block to current block within yield' do
         @model.block do
-          expect(@model.instance_variable_get('@in_block')).to eq(true)
+          expect(@model.instance_variable_get('@in_block').class).to eq(Block)
         end
       end
 
-      it 'sets @in_block before leaving' do
+      it 'sets @in_block to nil before leaving' do
         @model.block do
         end
-        expect(@model.instance_variable_get('@in_block')).to eq(false)
+        expect(@model.instance_variable_get('@in_block')).to eq(nil)
+      end
+
+      it 'adds a new block to the model' do
+        @model.block { }
+        expect(@model.blocks.size).to eq(1)
       end
     end
   end
