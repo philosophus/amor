@@ -87,6 +87,18 @@ module Amor
         @model.st(@constraint)
         expect(@model.constraints).to include(@constraint)
       end
+
+      it 'stores the index, which the constraint has in the model' do
+        @model.st(@constraint)
+        expect(@model.constraints[0].index).to eq(0)
+      end
+
+      it 'adds constraint to block if a block is given' do
+        @model.block do
+          @model.st(@constraint)
+        end
+        expect(@model.blocks.last.constraints).to include(@constraint)
+      end
     end
 
 
@@ -178,6 +190,44 @@ module Amor
       it 'sets the variables lower bound to 0' do
         @model.positive(@model.x(1))
         expect(@model.x(1).lb).to eq(0)
+      end
+    end
+
+    describe '#block' do
+      it 'yields' do
+        expect { |b| @model.block(&b) }.to yield_control
+      end
+
+      it 'sets @in_block to current block within yield' do
+        @model.block do
+          expect(@model.instance_variable_get('@in_block').class).to eq(Block)
+        end
+      end
+
+      it 'sets @in_block to nil before leaving' do
+        @model.block do
+        end
+        expect(@model.instance_variable_get('@in_block')).to eq(nil)
+      end
+
+      it 'adds a new block to the model' do
+        @model.block { }
+        expect(@model.blocks.size).to eq(1)
+      end
+    end
+
+    describe '#dec_string' do
+      it 'returns a string representation of specified decomposition in .dec file format' do
+        @model.st(@model.x(1) + @model.x(2) >= 3)
+        @model.block do
+          @model.st(@model.x(1) + @model.x(3) <= 1)
+          @model.st(@model.x(2) - @model.x(4) <= 2)
+        end
+        @model.block do
+          @model.st(@model.x(1) - @model.x(5) >= 1)
+        end
+        @model.st(@model.x(3) + @model.x(4) == 2)
+        expect(@model.dec_string).to eq("PRESOLVED 0\nNBLOCKS 2\nBLOCK 1\nc2\nc3\nBLOCK 2\nc4\nMASTERCONSS\nc1\nc5")
       end
     end
   end

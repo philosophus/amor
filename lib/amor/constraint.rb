@@ -1,6 +1,7 @@
 module Amor
   class Constraint
     attr_reader :lhs, :rhs, :relation
+    attr_accessor :index
 
     def initialize(lhs, relation, rhs)
       @lhs = Expression.new(lhs)
@@ -19,7 +20,11 @@ module Amor
           "="
         end
 
-      "#{temp_lhs.remove_constants.lp_string} #{relation_string} #{-temp_lhs.constant_factor}"
+      "#{lp_name}: #{temp_lhs.remove_constants.lp_string} #{relation_string} #{-temp_lhs.constant_factor}"
+    end
+
+    def lp_name
+      "c#{index+1}"
     end
 
     def to_s
